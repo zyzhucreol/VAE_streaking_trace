@@ -1,0 +1,26 @@
+import numpy as np
+import hdf5storage
+def read_data(train_dataset='/media/HDD1/zyz/FROG_train_Poisson/XUV_IR_train_Poisson_hard_20counts_myA.mat',test_dataset='/media/HDD1/zyz/FROG_train_Poisson/XUV_IR_test_Poisson_hard_20counts_myA.mat'):
+    load=hdf5storage.loadmat(train_dataset)
+#    xuv_real_train=np.float32(load['xuv_real_train'])
+#    xuv_imag_train=np.float32(load['xuv_imag_train'])
+#    ir_real_train=np.float32(load['ir_real_train'])
+#    ir_imag_train=np.float32(load['ir_imag_train'])
+    xuv_coefs_train=np.float32(load['xuv_coefs_train'])
+    ir_values_train=np.float32(load['ir_values_train'])
+    X_train=np.concatenate((xuv_coefs_train,ir_values_train),axis=1)
+    I_train=np.float32(load['I_train'])
+    counts_train=np.float32(load['counts_train'])
+    counts_train=counts_train.flatten()
+    load=hdf5storage.loadmat(test_dataset)
+#    xuv_real_test=np.float32(load['xuv_real_test'])
+#    xuv_imag_test=np.float32(load['xuv_imag_test'])
+#    ir_real_test=np.float32(load['ir_real_test'])
+#    ir_imag_test=np.float32(load['ir_imag_test'])
+    xuv_coefs_test=np.float32(load['xuv_coefs_test'])
+    ir_values_test=np.float32(load['ir_values_test'])
+    X_test=np.concatenate((xuv_coefs_test,ir_values_test),axis=1)
+    I_test=np.float32(load['I_test'])
+    counts_test=np.float32(load['counts_test'])
+    counts_test=counts_test.flatten()
+    return X_train, I_train, counts_train,X_test, I_test,counts_test
